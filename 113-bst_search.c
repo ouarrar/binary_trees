@@ -1,20 +1,22 @@
 #include "binary_trees.h"
 
 /**
- * binary_tree_nodes - Counts the nodes with at least 1 child in a binary tree.
- * @tree: A pointer to the root node of the tree to count the number of nodes.
+ * bst_search - Searches for a value in a binary search tree.
+ * @tree: A pointer to the root node of the BST to search.
+ * @value: The value to search for in the BST.
  *
- * Return: If tree is NULL, the function must return 0, else return node count.
+ * Return: If the tree is NULL or the value is not found, NULL.
+ *         Otherwise, a pointer to the node containing the value.
  */
-size_t binary_tree_nodes(const binary_tree_t *tree)
+bst_t *bst_search(const bst_t *tree, int value)
 {
-	size_t nodes = 0;
-
-	if (tree)
+	if (tree != NULL)
 	{
-		nodes += (tree->left || tree->right) ? 1 : 0;
-		nodes += binary_tree_nodes(tree->left);
-		nodes += binary_tree_nodes(tree->right);
+		if (tree->n == value)
+			return ((bst_t *)tree);
+		if (tree->n > value)
+			return (bst_search(tree->left, value));
+		return (bst_search(tree->right, value));
 	}
-	return (nodes);
+	return (NULL);
 }
